@@ -1,4 +1,4 @@
-`include "uart_params.vh"
+`include "../uart_params.vh"
 module tx_top(
     input [`DATA_WIDTH - 1 : 0] DATA_IN,
     input                       TX_CLK,

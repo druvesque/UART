@@ -1,8 +1,9 @@
+`include "../uart_params.vh"
 module parity_checker(
-    input parity_load,
-    input rx_in,
+    input                       parity_load,
+    input                       rx_in,
     input [`DATA_WIDTH - 1 : 0] parallel_in,
-    output parity_bit_error
+    output reg                  parity_bit_error
 );
 
     always @(*) begin

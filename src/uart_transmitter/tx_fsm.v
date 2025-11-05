@@ -1,4 +1,4 @@
-`include "uart_params.vh"
+`include "../uart_params.vh"
 module tx_fsm(
     input  tx_clk,
     input  tx_start,

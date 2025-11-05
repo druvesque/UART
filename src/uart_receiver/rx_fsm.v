@@ -1,3 +1,4 @@
+`include "../uart_params.vh"
 module rx_fsm(
     input      rx_clk,
     input      start_bit_detected,
@@ -9,7 +10,9 @@ module rx_fsm(
 
     reg [1:0] state, next_state;
 
-    parameter IDLE = 2'b00, DATA_BIT = 2'b01, PARITY_BIT = 2'b10, STOP_BIT = 2'b11
+    parameter IDLE = 2'b00, DATA_BIT = 2'b01, PARITY_BIT = 2'b10, STOP_BIT = 2'b11;
+
+    reg resetn = 1'b1;
 
     integer count = -1;
 
@@ -28,7 +31,7 @@ module rx_fsm(
                 count = count + 1;
             end
 
-            PARITY_BIT: (parity_bit_error) ? IDLE : STOP_BIT;
+            PARITY_BIT: next_state = (parity_bit_error) ? IDLE : STOP_BIT;
 
             STOP_BIT: next_state = IDLE; 
 

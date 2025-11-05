@@ -1,12 +1,13 @@
+`include "../uart_params.vh"
 module rx_top(
-    input                        RX_IN,
-    input                        RX_CLK,
-    output                       PARITY_BIT_ERROR,
-    output                       STOP_BIT_ERROR,
-    output [`DATA_WIDTH - 1 : 0] RX_DATA
+    input                            RX_IN,
+    input                            RX_CLK,
+    output                           PARITY_BIT_ERROR,
+    output                           STOP_BIT_ERROR,
+    output reg [`DATA_WIDTH - 1 : 0] RX_DATA
 );
 
-    wire start_bit_detected, parity_bit_error, shift, parity_load, check_stop;
+    wire start_bit_detected, shift, parity_load, check_stop;
     wire [`DATA_WIDTH - 1 : 0] parallel_out;
 
     rx_fsm(
@@ -40,7 +41,13 @@ module rx_top(
     stop_bit_checker(
         .check_stop(check_stop),
         .rx_in(RX_IN),
-        .stop_bit_error(STOP_BIT_ERROR);
+        .stop_bit_error(STOP_BIT_ERROR)
     );
+
+    always @(*) begin
+        if (!STOP_BIT_ERROR)
+            RX_DATA <= parallel_out;
+    end
+
 
 endmodule
