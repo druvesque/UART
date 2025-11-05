@@ -8,8 +8,8 @@ module tx_fsm(
     // TODO: ADD BUSY STATE
 );
 
-    reg [1:0] state;
-    reg [1:0] next_state;
+    reg [2:0] state, next_state;
+
     reg resetn;
 
     parameter IDLE = 3'b000, START_BIT = 3'b001, DATA_BIT = 3'b010, 
