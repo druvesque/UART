@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "uart_params.vh"
 module rx_fsm(
     input      rx_clk,
     input      start_bit_detected,

@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "uart_params.vh"
 module piso(
     input                            tx_clk,
     input                            load,

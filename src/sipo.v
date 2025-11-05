@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "/uart_params.vh"
 module sipo(
     input                            rx_clk,
     input                            shift,

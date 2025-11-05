@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "uart_params.vh"
 module parity_checker(
     input                       parity_load,
     input                       rx_in,

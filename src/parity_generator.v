@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "uart_params.vh"
 module parity_generator(
     input                        load,
     input  [`DATA_WIDTH - 1 : 0] in,

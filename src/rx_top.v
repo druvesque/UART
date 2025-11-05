@@ -1,4 +1,4 @@
-`include "../uart_params.vh"
+`include "uart_params.vh"
 module rx_top(
     input                            RX_IN,
     input                            RX_CLK,
