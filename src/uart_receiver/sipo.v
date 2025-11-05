@@ -2,7 +2,6 @@
 module sipo(
     input                            rx_clk,
     input                            shift,
-    input                            load,
     input                            serial_in,
     output reg [`DATA_WIDTH - 1 : 0] parallel_out
 );

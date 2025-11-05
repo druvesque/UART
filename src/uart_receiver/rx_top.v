@@ -1,23 +1,46 @@
 module rx_top(
     input                        RX_IN,
+    input                        RX_CLK,
     output                       PARITY_BIT_ERROR,
     output                       STOP_BIT_ERROR,
     output [`DATA_WIDTH - 1 : 0] RX_DATA
 );
 
-    wire start_bit_detected;
+    wire start_bit_detected, parity_bit_error, shift, parity_load, check_stop;
+    wire [`DATA_WIDTH - 1 : 0] parallel_out;
+
+    rx_fsm(
+        .rx_clk(RX_CLK),
+        .start_bit_detected(start_bit_detected),
+        .parity_bit_error(PARITY_BIT_ERROR),
+        .shift(shift),
+        .parity_load(parity_load),
+        .check_stop(check_stop)
+    );
 
     detect_start(
         .rx_in(RX_IN),
         .start_bit_detected(start_bit_detected)
     );
 
-    sipo();
+    sipo(
+        .rx_clk(RX_CLK),
+        .shift(shift),
+        .serial_in(RX_IN),
+        .parallel_out(parallel_out)
+    );
 
-    parity_checker();
+    parity_checker(
+        .parity_load(parity_load),
+        .rx_in(RX_IN),
+        .parallel_in(parallel_out),
+        .parity_bit_error(PARITY_BIT_ERROR)
+    );
 
-    stop_bit_checker();
-
-    rx_fsm();
+    stop_bit_checker(
+        .check_stop(check_stop),
+        .rx_in(RX_IN),
+        .stop_bit_error(STOP_BIT_ERROR);
+    );
 
 endmodule
