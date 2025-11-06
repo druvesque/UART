@@ -14,29 +14,31 @@ module rx_fsm(
 
     reg resetn = 1'b1;
 
-    integer count = -1;
+    reg start;
+    integer rx_count;
 
-    always @(state, count, start_bit_detected)
+    always @(state, rx_count, start_bit_detected, parity_bit_error)
     begin
 
+        $display("State: %d, Count: %d", state, rx_count);
+        $display("Shift: %b", shift);
         case (state)
 
-            IDLE: begin
-                next_state = (start_bit_detected) ? DATA_BIT : IDLE;
-                count = count + 1;
-            end
+            IDLE: next_state = (start_bit_detected) ? DATA_BIT : IDLE;
 
             DATA_BIT: begin
-                next_state = (count != `DATA_WIDTH) ? DATA_BIT : PARITY_BIT;
-                count = count + 1;
+                start = (rx_count == `DATA_WIDTH) ? 1'b0 : 1'b1;
+                next_state = (rx_count == `DATA_WIDTH) ? PARITY_BIT : DATA_BIT;
             end
 
-            PARITY_BIT: next_state = (parity_bit_error) ? IDLE : STOP_BIT;
+            PARITY_BIT: begin
+                next_state = (parity_bit_error) ? IDLE : STOP_BIT; 
+            end
 
-            STOP_BIT: next_state = IDLE; 
+            STOP_BIT: next_state = IDLE;
 
             default: next_state = IDLE;
-
+              
         endcase
     end
 
@@ -75,4 +77,10 @@ module rx_fsm(
             end
         endcase
     end
+
+    always @(posedge rx_clk)
+        if(start)
+            rx_count <= rx_count + 1;
+        else
+            rx_count <= 1;
 endmodule

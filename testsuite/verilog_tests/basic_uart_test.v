@@ -1,5 +1,5 @@
 `include "../../src/uart_params.vh"
-module tb;
+module basic_tx_test;
     reg clk = 0;
     reg [`DATA_WIDTH - 1 : 0] in;
     reg tx_start;

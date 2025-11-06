@@ -3,7 +3,7 @@ module detect_start(
     output reg start_bit_detected
 );
 
-    always @(*) begin
+    always @(rx_in) begin
         if (!rx_in)
             start_bit_detected <= 1'b1;
     end

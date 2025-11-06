@@ -7,6 +7,7 @@ module parity_checker(
 );
 
     always @(*) begin
+
         if (parity_load)
             parity_bit_error <= (rx_in == ^parallel_in);
         else

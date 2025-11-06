@@ -1,4 +1,4 @@
-`include "/uart_params.vh"
+`include "uart_params.vh"
 module sipo(
     input                            rx_clk,
     input                            shift,
@@ -16,9 +16,12 @@ module sipo(
             i = i + 1;
         end
 
-        if (i == `DATA_WIDTH)
+        if (i == `DATA_WIDTH) begin
             parallel_out <= temp_data;
+            $display("SIPO Output: %b", parallel_out);
+        end
 
     end
 
 endmodule
+

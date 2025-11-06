@@ -1,5 +1,5 @@
 `include "../../src/uart_params.vh"
-module tb;
+module basic_rx_test;
     reg rx_in;
     reg rx_clk = 0;
     wire parity_bit_error, stop_bit_error;
@@ -26,7 +26,7 @@ module tb;
     end
 
     initial begin
-        $monitor("Time: %g, RX_IN: %b, RX_DATA: %b, Parity: %b, Stop_check: %b", $time, rx_in, rx_data, parity_bit_error, stop_bit_error);
-        #500 $finish;
+        $monitor("Time: %g, RX_IN: %b, RX_DATA: %b, Parity Bit Error: %b, Stop_check: %b", $time, rx_in, rx_data, parity_bit_error, stop_bit_error);
+        #300 $finish;
     end
 endmodule
