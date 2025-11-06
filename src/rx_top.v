@@ -45,7 +45,7 @@ module rx_top(
     );
 
     always @(*) begin
-        if (!STOP_BIT_ERROR)
+        //if (!STOP_BIT_ERROR)
             RX_DATA <= parallel_out;
     end
 

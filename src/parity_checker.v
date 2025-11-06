@@ -10,7 +10,6 @@ module parity_checker(
 
         if (parity_load)
             parity_bit_error <= (rx_in == ^parallel_in);
-        else
-            parity_bit_error <= 1'b0;
+
     end
 endmodule

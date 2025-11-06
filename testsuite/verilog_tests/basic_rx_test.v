@@ -13,7 +13,7 @@ module basic_rx_test;
     initial begin
         rx_in = 1;
         #5 rx_in = 0;  // start
-        #20 rx_in = 1; // data
+        #40 rx_in = 1; // data
         #20 rx_in = 0; //
         #20 rx_in = 1; //
         #20 rx_in = 0; //
@@ -26,7 +26,7 @@ module basic_rx_test;
     end
 
     initial begin
-        $monitor("Time: %g, RX_IN: %b, RX_DATA: %b, Parity Bit Error: %b, Stop_check: %b", $time, rx_in, rx_data, parity_bit_error, stop_bit_error);
+        $monitor("Time: %g, RX_IN: %b, RX_DATA: %b, Parity Bit Error: %b, Stop bit error: %b", $time, rx_in, rx_data, parity_bit_error, stop_bit_error);
         #300 $finish;
     end
 endmodule

@@ -11,14 +11,12 @@ module sipo(
 
     always @(posedge rx_clk) begin
 
+        if (i == `DATA_WIDTH) 
+            parallel_out <= temp_data; 
+
         if (shift) begin
             temp_data[i] = serial_in;
             i = i + 1;
-        end
-
-        if (i == `DATA_WIDTH) begin
-            parallel_out <= temp_data;
-            $display("SIPO Output: %b", parallel_out);
         end
 
     end

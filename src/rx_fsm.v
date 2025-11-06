@@ -20,21 +20,22 @@ module rx_fsm(
     always @(state, rx_count, start_bit_detected, parity_bit_error)
     begin
 
-        $display("State: %d, Count: %d", state, rx_count);
-        $display("Shift: %b", shift);
         case (state)
 
-            IDLE: next_state = (start_bit_detected) ? DATA_BIT : IDLE;
+            IDLE: begin 
+                next_state = (start_bit_detected) ? DATA_BIT : IDLE;
+                if (start_bit_detected)
+                    $display("\nIDLE yaha khatam hua\n Shift: %b", shift); 
+            end
 
             DATA_BIT: begin
+                $display("\nDATA PHASE START HUA IDHAR, Shift: %b\n", shift);
                 start = (rx_count == `DATA_WIDTH) ? 1'b0 : 1'b1;
                 next_state = (rx_count == `DATA_WIDTH) ? PARITY_BIT : DATA_BIT;
             end
 
-            PARITY_BIT: begin
-                next_state = (parity_bit_error) ? IDLE : STOP_BIT; 
-            end
-
+            PARITY_BIT: next_state = (parity_bit_error) ? IDLE : STOP_BIT; 
+            
             STOP_BIT: next_state = IDLE;
 
             default: next_state = IDLE;
