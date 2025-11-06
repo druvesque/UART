@@ -10,7 +10,7 @@ module rx_top(
     wire start_bit_detected, shift, parity_load, check_stop;
     wire [`DATA_WIDTH - 1 : 0] parallel_out;
 
-    rx_fsm(
+    rx_fsm RX_FSM(
         .rx_clk(RX_CLK),
         .start_bit_detected(start_bit_detected),
         .parity_bit_error(PARITY_BIT_ERROR),
@@ -19,26 +19,26 @@ module rx_top(
         .check_stop(check_stop)
     );
 
-    detect_start(
+    detect_start DETECT_START(
         .rx_in(RX_IN),
         .start_bit_detected(start_bit_detected)
     );
 
-    sipo(
+    sipo SIPO(
         .rx_clk(RX_CLK),
         .shift(shift),
         .serial_in(RX_IN),
         .parallel_out(parallel_out)
     );
 
-    parity_checker(
+    parity_checker PARITY_CHECKER(
         .parity_load(parity_load),
         .rx_in(RX_IN),
         .parallel_in(parallel_out),
         .parity_bit_error(PARITY_BIT_ERROR)
     );
 
-    stop_bit_checker(
+    stop_bit_detector STOP_BIT_DETECTOR(
         .check_stop(check_stop),
         .rx_in(RX_IN),
         .stop_bit_error(STOP_BIT_ERROR)
