@@ -19,35 +19,10 @@ use warnings;
 use File::Find;
 
 my $base_dir = "/c/Users/dhruv/druvesque/git_src/uart/";
+my $test_dir = "/c/Users/dhruv/druvesque/git_src/uart/testsuite";
 
-my @directories = (
-    "$base_dir/src/uart_transmitter/"
-);
-
-my @verilog_files;
+system("vlog $base_dir/src/*.v $test_dir/verilog_tests/*.v");
 
 
-foreach my $dir (@directories) {
-    print "\n Scanning directory: $dir\n";
 
-    find(
-        sub {
-            if (/\.v$/ && -f $_) {
-                push @verilog_files, $File::Find::name;
-            }
-        },
-        $dir
-    );
-}
 
-print "\n Starting compilation sequence...\n";
-
-foreach my $file (@verilog_files) {
-    print "  -> Compiling: $file\n";
-    my $status = system("vlog \"$file\"");
-    if ($status != 0) {
-        die "Compilation failed for: $file\n";
-    }
-}
-
-print "Compilation completed successfully for all Verilog files!\n";
