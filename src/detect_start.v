@@ -1,3 +1,4 @@
+// THIS IS A START BIT DETECTOR
 module detect_start(
     input      rx_in,
     output reg start_bit_detected
